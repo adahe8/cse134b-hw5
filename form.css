@@ -1,0 +1,38 @@
+@import url(main.css);
+
+html {
+  margin: 2rem;
+  background-color: midnightblue;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  row-gap: 1rem;
+  background: linear-gradient(
+    180deg,
+    var(--pale-blue) 0%,
+    var(--pale-peach) 100%
+  );
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 8px;
+}
+
+.question {
+  display: grid;
+}
+
+input[type="textarea"] {
+  min-height: 3rem;
+}
+
+input[type="submit"] {
+  margin: auto;
+  height: 2rem;
+  width: 100%;
+  background-color: var(--accent-2);
+  font-family: "KoPub Batang", serif;
+  font-size: 16px;
+  border-radius: 8px;
+}

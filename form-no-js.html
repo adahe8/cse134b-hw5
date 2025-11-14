@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contact Form</title>
+    <link rel="stylesheet" href="form.css" />
+  </head>
+  <body>
+    <form action="https://httpbin.org/post" method="post">
+      <h2>Contact Me!</h2>
+      <div class="question">
+        <label for="name">First & Last Name *</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+        />
+      </div>
+
+      <div class="question">
+        <label for="email">Email *</label>
+        <input type="email" id="email" name="email" />
+      </div>
+
+      <div class="question">
+        <label for="linkedin">LinkedIn</label>
+        <input type="text" id="linkedin" name="linkedin"/>
+      </div>
+
+      <div class="question">
+        <label for="comments">Comments (2000 character limit) *</label>
+        <textarea
+          id="comments"
+          name="comments"
+          rows="5"
+          cols="50"
+          placeholder="Leave a message for Ada..."
+        ></textarea>
+      </div>
+
+      <input type="hidden" id="botfield" name="botfield" value="true" />
+
+      <input type="submit" id="submit" name="submit" />
+
+      <output id="errors"></output>
+      <output id="information"></output>
+    </form>
+  </body>
+</html>
