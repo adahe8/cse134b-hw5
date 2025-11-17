@@ -34,7 +34,6 @@
           pattern="^[a-zA-Z0-9._%+-]+@^[a-zA-Z0-9._%+-]+\.[a-zA-Z]{2,}$"
           title="Make sure to enter a typical email address."
           required
-          minlength="6"
         />
       </form-field>
 
@@ -68,8 +67,11 @@
 
       <input type="submit" id="submit" name="submit" />
 
-      <output id="errors"> Error Messages: </output>
-      <output id="information"> Information: </output>
+      <output id="errors">
+        Error Messages
+        <p>Invalid character entered!</p>
+      </output>
+      <output id="information"> Information </output>
 
       <script src="form.js"></script>
     </form>

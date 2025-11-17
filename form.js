@@ -12,17 +12,13 @@ const erroroutput = document.getElementById("errors");
 
 // temporary error message function
 // have default time shown be 3 secs
-function showErrorMsg(message, duration = 3000) {
-  const messageVal = document.createElement("p");
-  messageVal.textContent = message;
+function showErrorMsg(duration = 3000) {
+  const messageVal = document.querySelector("output p");
   erroroutput.appendChild(messageVal);
-
+  messageVal.style.opacity = "1";
   setTimeout(() => {
     messageVal.style.opacity = "0";
-    setTimeout(() => {
-      messageVal.remove();
-    }, 500);
-  }, duration);
+  }, duration - 500);
 }
 
 // want to make required field go red after input field interacted with if left empty
@@ -49,7 +45,7 @@ inputs.forEach((field) => {
 required.forEach((field) => {
   field.addEventListener("input", function () {
     if (field.validity.patternMismatch) {
-      showErrorMsg("Invalid character entered!");
+      showErrorMsg();
       field.classList.add("invalid-entry");
     } else {
       field.classList.remove("invalid-entry");
