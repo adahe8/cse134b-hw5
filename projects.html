@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ada's Projects</title>
+    <link rel="icon" href="assets/heart.png" sizes="any" />
+    <link rel="stylesheet" href="main.css" />
+    <style>
+      html {
+        background: linear-gradient(180deg, #90c6f0 0%, #fcf4e9 100%);
+        min-height: 100vh;
+      }
+    </style>
+    <!-- I will add script to make the project-cards clickable -->
+  </head>
+  <body>
+    <header>
+      <nav>
+        <img src="assets/logo.png" alt="blue heart logo" />
+        <a href="index.html">Home</a>
+        <a href="aboutme.html">About Me</a>
+        <a href="projects.html" data-current>Projects</a>
+        <a href="assets/Ada_resume.pdf">Resume</a>
+      </nav>
+      <section class="image-text-header" id="project-header">
+        <picture>
+          <source srcset="assets/projectsphoto.avif" type="image/avif" />
+          <source srcset="assets/projectsphoto.webp" type="image/webp" />
+          <img
+            src="assets/projectsphoto.png"
+            alt="From left to right, Ada and her friends Ethan and Hannah working on a hackathon project around a single laptop."
+          />
+        </picture>
+        <h1>Projects</h1>
+      </section>
+    </header>
+    <main id="projects-main">
+      <project-card>
+        <div id="asteria" class="projectdisplay">
+          <subject-tag class="ai">ai</subject-tag>
+          <subject-tag class="fullstack">fullstack</subject-tag>
+        </div>
+        <a
+          href="https://github.com/adahe8/bizhacks?tab=readme-ov-file#asteria---omni-channel-marketing-campaign-management-system"
+          >Asteria | Infosys BizHacks 2025</a
+        >
+      </project-card>
+      <project-card>
+        <div id="chat-feature" class="projectdisplay">
+          <subject-tag class="ui">ui/ux</subject-tag>
+        </div>
+        <a href="https://library.ucsd.edu/"
+          >Chat with a Librarian Widget | UC San Diego Library</a
+        >
+      </project-card>
+      <project-card>
+        <div id="endowments" class="projectdisplay">
+          <subject-tag class="ui">ui/ux</subject-tag>
+          <subject-tag class="frontend">frontend</subject-tag>
+        </div>
+        <a>Endowments Webpages | UC San Diego Library</a>
+      </project-card>
+    </main>
+    <footer>
+      <a>ada.he0908@gmail.com</a>
+      <a href="https://www.linkedin.com/in/adahe0908/">
+        <img
+          width="30"
+          height="30"
+          src="assets/linkedin-white.png"
+          alt="linkedin"
+        />
+      </a>
+    </footer>
+  </body>
+</html>
