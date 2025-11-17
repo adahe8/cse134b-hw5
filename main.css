@@ -1,35 +1,4 @@
-/** variables to use: no magic numbers here */
-:root {
-  --font-size-h1: 2.5rem;
-  --font-size-h2: 2rem;
-  --font-size-h3: 1.6rem;
-  --font-size-big: 1.25rem;
-
-  --spacing-size: 1.5rem;
-  --gutter-size: 3rem;
-  --corner-rounding: 1.25rem;
-  --form-rounding: 8px;
-
-  --footer-height: 4.5rem;
-  --max-subheading-width: 40rem;
-  --home-img-min-width: 250px;
-  --home-img-max-width: 28rem;
-  --blob-min-width: 17.5rem;
-  --blob-min-height: 18rem;
-
-  --card-ratio: 3 / 2;
-  --project-card-width: 25rem;
-  --project-label-height: 3rem;
-  --tag-padding: 0.25rem;
-  --tag-rounding: 10px;
-
-  --shape-fill-gradient: linear-gradient(180deg, #fcf4e9 0%, #90c6f0 100%);
-  --pale-blue: #90c6f0;
-  --pale-peach: #fcf4e9;
-  --accent-1: #0163d2;
-  --accent-2: #ffe0b6;
-  --white-outline: #fff;
-}
+@import url(vars.css);
 
 /** uploading custom font */
 @font-face {
@@ -213,10 +182,10 @@ main img {
   }
 }
 .gradient-top {
-  stop-color: var(--pale-peach);
+  stop-color: var(--end-peach);
 }
 .gradient-bottom {
-  stop-color: var(--pale-blue);
+  stop-color: var(--end-blue);
 }
 
 /** styling title-picture overlays */
@@ -290,7 +259,7 @@ subject-tag {
   background-color: var(--accent-2);
 }
 .ai {
-  background-color: var(--pale-blue);
+  background-color: var(--end-blue);
 }
 
 /** fallbacks if browser doesn't support color - trying out 2 of my fave colors in hsl */
@@ -318,8 +287,8 @@ form {
   row-gap: 1rem;
   background: linear-gradient(
     180deg,
-    var(--pale-blue) 0%,
-    var(--pale-peach) 100%
+    var(--end-blue) 0%,
+    var(--end-peach) 100%
   );
   padding: 1rem;
   border: 1px solid black;
