@@ -2,6 +2,7 @@ const btn = document.querySelector(".toggle");
 const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 const label = document.getElementById("theme-label");
 updateIconsAndButtons();
+btn.style.display = "block";
 
 const defaultTheme = localStorage.getItem("theme");
 if (defaultTheme == "dark") {
