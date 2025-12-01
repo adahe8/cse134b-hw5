@@ -269,6 +269,7 @@ project-card {
   inset: 0;
   object-fit: cover;
   object-position: center;
+  pointer-events: none;
   z-index: 0;
 }
 
@@ -316,13 +317,14 @@ dialog-overlay {
 }
 dialog {
   position: absolute;
+  overflow: scroll;
   margin-top: 5%;
   margin-bottom: 15%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  width: 80%;
+  justify-content: flex-start;
+  width: 60%;
   height: 80%;
   border: none;
   border-radius: var(--corner-rounding);
@@ -330,12 +332,16 @@ dialog {
   z-index: 2;
   section {
     width: 100%;
-    text-align: center;;
+    text-align: center;
+    padding: var(--spacing-size) var(--spacing-size) 0 var(--spacing-size);
   }
   button {
     margin: 0;
     width:fit-content;
   }
+}
+dialog article {
+  padding: 0 var(--spacing-size) var(--spacing-size) var(--spacing-size);
 }
 marquee-container {
   display: flex;
@@ -347,7 +353,7 @@ marquee-container {
     padding: var(--spacing-size);
     background-color: var(--accent-1);
   }
-  div {
+  #marquee-holder {
     flex: 1;
     width: 100%;
     overflow: hidden;
@@ -355,10 +361,10 @@ marquee-container {
     background-color: var(--end-blue);
   }
 }
-marquee-content {
+#marquee-content {
   width: 100%;
   display: inline-block;
-  animation: scroll-left 10s linear infinite;
+  animation: scroll-left 15s linear infinite;
 }
 
 @keyframes scroll-left {

@@ -45,8 +45,8 @@
       </section>
     </header>
     <main id="projects-main">
-      <project-card>
-        <div id="asteria" class="projectdisplay">
+      <project-card data-project-name="asteria">
+        <div class="projectdisplay">
           <subject-tag class="ai">ai</subject-tag>
           <subject-tag class="fullstack">fullstack</subject-tag>
           <video autoplay muted loop>
@@ -63,7 +63,7 @@
           >Asteria | Infosys BizHacks 2025</a
         >
       </project-card>
-      <project-card>
+      <project-card data-project-name="ask-us">
         <div id="chat-feature" class="projectdisplay">
           <subject-tag class="ui">design</subject-tag>
           <picture loading="lazy">
@@ -89,8 +89,8 @@
           >Chat with a Librarian Widget | UC San Diego Library</a
         >
       </project-card>
-      <project-card>
-        <div id="endowments" class="projectdisplay">
+      <project-card data-project-name="endowments">
+        <div class="projectdisplay">
           <subject-tag class="ui">design</subject-tag>
           <subject-tag class="frontend">frontend</subject-tag>
           <video autoplay muted loop>
@@ -104,8 +104,8 @@
         </div>
         <a>Endowments Webpages | UC San Diego Library</a>
       </project-card>
-      <project-card>
-        <div id="website" class="projectdisplay">
+      <project-card data-project-name="website">
+        <div class="projectdisplay">
           <subject-tag class="fullstack">fullstack</subject-tag>
           <subject-tag class="ui">design</subject-tag>
           <picture loading="lazy">
@@ -125,25 +125,27 @@
         </div>
         <a>Personal Website | Passion Project </a>
       </project-card>
-      <dialog-overlay>
-        <dialog open closedby="any">
-          <section>
-            <h2>{{title}}</h2>
-            <h3>{{date}}</h3> 
-            <marquee-container>
-              <p>Tech Stack</p>
-              <div>
-                <marquee-content>tools</marquee-content>
-              </div>
-            </marquee-container>
-          </section>
-          <button>View Project</button>
-          <article>
-            <h3>{{heading}}</h3>
-            <p>{{description}}</p>
-          </article>
-        </dialog>
-      </dialog-overlay>
+      <template>
+        <dialog-overlay>
+          <dialog closedby="any">
+            <section>
+              <h2></h2>
+              <h3></h3> 
+              <marquee-container>
+                <p>Tech Stack</p>
+                <div id="marquee-holder">
+                  <div id="marquee-content"></div>
+                </div>
+              </marquee-container>
+            </section>
+            <button></button>
+            <article>
+              <h3></h3>
+              <content></content>
+            </article>
+          </dialog>
+        </dialog-overlay>
+      </template>
     </main>
     <footer>
       <a>ada.he0908@gmail.com</a>

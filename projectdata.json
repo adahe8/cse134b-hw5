@@ -4,7 +4,7 @@
     "date": "July '25",
     "tools": ["Python","TypeScript","Next.js","Tailwind", "CrewAI", "FastAPI", "Vercel"],
     "deployment": "https://github.com/adahe8/bizhacks",
-    "article-header": "The Duct-Taped Nature of Making Very Impressive Looking AI Projects on a Severe Time Crunch. AKA, How We Won a Hackathon with Vibe Coding",
+    "articleHeader": "The Duct-Taped Nature of Making Very Impressive Looking AI Projects on a Severe Time Crunch. AKA, How We Won a Hackathon with Vibe Coding",
     "description": [
         "Asteria is an agentic AI application that automates the full marketing pipeline for products from start to finish based on some user supplied information, tailoring the ads displayed across different channels, and altering budget lines, that I created with teammates Hannah Nguyen and Ethan Kallett.",
         "We ideated the project as a team over a span of 6 hours, planning functionality and feature ideas with feverish whiteboard scribbles, and outlined architectures for it with the help of LLMs. I worked on the technical implementation side, coding (in Python) the orchestration agent within the agent swarm (which we used CrewAI to set up), and assisting with refinements for the frontend. This project, created across a span of 36 hours for a hackathon and business case competition, was my first time dabbling into “vibe coding”, or heavily leveraging large language models as part of my development workflow. We used Anthropic's Claude model to support our process.",
@@ -18,7 +18,7 @@
     "date": "Nov '23 - March '24",
     "tools": ["Figma", "JIRA", "Confluence"],
     "deployment": "https://library.ucsd.edu/",
-    "article-header": "Redesigning UC San Diego Library's Digital Experiences",
+    "articleHeader": "Redesigning UC San Diego Library's Digital Experiences",
     "description": [
         "UC San Diego Library's website has historically had a chat widget that stays in the bottom right corner for every visitor. Clicking the icon opens a form widget for 24/7 support from a librarian. Since the website was revamped in 2018, and brand guidelines were defined, that button's design has phased out of date. Over the course of roughly 3 months, I refreshed the design of this icon and widget to reflect brand guidelines.",
         "This was the first web redesign project I conducted for UC San Diego Library. I served as the design lead, organizing the design files on Figma, documenting our process, collaborating with and directing other student designers during our Figma prototyping sessions and presentations to stakeholders, and finally communicating with the frontend developers to implement the selected icon and widget design.",
@@ -35,7 +35,7 @@
     "date": "Oct '24 - June '25",
     "tools": ["Figma","JIRA","Confluence", "HTML", "CSS", "JS", "Github"],
     "deployment": "",
-    "article-header": "On Atomic Design & End-to-End Development",
+    "articleHeader": "On Atomic Design & End-to-End Development",
     "description": [
         "To honor donors and provide an easy way to look up what endowments (AKA monetary grants) to the UC San Diego Library went towards, the Library web committee asked my team, the Technology & Digital Experience (TDX) department, to create webpages for each unique endowment, and an index page organizing all of them. I took on the project with my team's frontend engineer, Christoper Lopez.",
         "This was an intensive end-to-end project that involved live user research, design spectrums, and code contributions. We needed to create 2 types of webpages: the webpage for each endowment, and the index page showcasing the list of endowments. For the donation page template, I began sketching on Figma with a basic page structure for an informational webpage from the UC San Diego Library's design system, but it still needed to be customized specialized components. For the index page, we needed to create a specialized search bar, a featured cards component, and designs for the list of endowments. Here, I  forayed into atomic design, or starting with sketching designs of the smallest useful units within a component before building up sketches for the full unit. This meant developing variants of endowments “cards” for the index page, before composing those variants into variations of designs for the featured endowments gallery or endowments lists. I did this process for each complex component, breaking them down into units and designing from the units up, until we had spectra of designs for each type of page ranging from minimalist to maximalist design.",
@@ -51,7 +51,7 @@
     "date": "Oct '25 - Present",
     "tools": ["Figma","HTML","CSS","JS","Astro","Cloudflare"],
     "deployment": "https://cse134b-hw4-1z1.pages.dev/",
-    "article-header": "",
+    "articleHeader": "",
     "description": [
         "My personal website is an exercise in revisiting first principles and following the progressive enhancement strategy of web development, starting by writing out content with basic principles of good semantic markup, before building up by adding interactivity, special features like the theme toggle, and offline functionality via service workers.",
         "This variation demonstrates how far vanilla HTML, CSS (complete with its vast variety of APIs), and JavaScript can take you; frameworks like React and Next.js are so popular right now, but we don’t often consider the tradeoffs that come with them. What you see right now is an demonstration of how the functionality I aim for when developing with frameworks are achievable using the simplest baseline tools.",
