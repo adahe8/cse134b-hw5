@@ -46,85 +46,20 @@
     </header>
     <main id="projects-main">
       <noscript> Enable JavaScript to view in depth project descriptions and their deployment statuses! </noscript>
-      <project-card data-project-name="asteria">
-        <div class="projectdisplay">
-          <subject-tag class="ai">ai</subject-tag>
-          <subject-tag class="fullstack">fullstack</subject-tag>
-          <video autoplay muted loop>
-            <source
-              src="assets/asteria-demo.mp4"
-              type="video/mp4"
-              aria-label="A demonstration of some key metrics pages in Asteria."
-            />
-            Video is not supported.
-          </video>
-        </div>
-        <a
-          href="https://github.com/adahe8/bizhacks?tab=readme-ov-file#asteria---omni-channel-marketing-campaign-management-system"
-          >Asteria | Infosys BizHacks 2025</a
-        >
+      <project-card data-project-name="asteria" data-title="Asteria | Infosys BizHacks 2025" 
+        data-cover-type="video" data-srcs='["assets/asteria-demo.mp4"]' data-tags='["ai", "fullstack"]'
+        data-deploy-link="https://github.com/adahe8/bizhacks?tab=readme-ov-file#asteria---omni-channel-marketing-campaign-management-system">
       </project-card>
-      <project-card data-project-name="ask-us">
-        <div id="chat-feature" class="projectdisplay">
-          <subject-tag class="ui">design</subject-tag>
-          <picture loading="lazy">
-            <source 
-              srcset="assets/ask-us-demo.gif"
-              type="image/gif"
-            />
-            <source
-              srcset="assets/library-with-chat.avif"
-              type="image/avif"
-            />
-            <source
-              srcset="assets/library-with-chat.webp"
-              type="image/webp"
-            />
-            <img
-              src="assets/library-with-chat.png"
-              alt="Image of the Chat with a Librarian widget interface that Ada designed and developed."
-            />  
-          </picture>
-        </div>
-        <a href="https://library.ucsd.edu/"
-          >Chat with a Librarian Widget | UC San Diego Library</a
-        >
+      <project-card data-project-name="ask-us" data-title="Chat with a Librarian Widget | UCSD Library" 
+        data-cover-type="image" data-srcs='["assets/ask-us-demo.gif", "assets/library-with-chat.avif", "assets/library-with-chat.webp", "assets/library-with-chat.png"]'
+        data-tags='["design"]' data-deploy-link="https://library.ucsd.edu/">
       </project-card>
-      <project-card data-project-name="endowments">
-        <div class="projectdisplay">
-          <subject-tag class="ui">design</subject-tag>
-          <subject-tag class="frontend">frontend</subject-tag>
-          <video autoplay muted loop>
-            <source
-              src="assets/endowments.mp4"
-              type="video/mp4"
-              aria-label="A video demo of the endowments webpage"
-            />
-            Video not supported.
-          </video>
-        </div>
-        <a>Endowments Webpages | UC San Diego Library</a>
+      <project-card data-project-name="endowments" data-title="Endowments Webpages | UCSD Library" 
+        data-cover-type="video" data-srcs='["assets/endowments.mp4"]' data-tags='["design", "frontend"]'>
       </project-card>
-      <project-card data-project-name="website">
-        <div class="projectdisplay">
-          <subject-tag class="fullstack">fullstack</subject-tag>
-          <subject-tag class="ui">design</subject-tag>
-          <picture loading="lazy">
-            <source
-              src="assets/personal-website.avif"
-              type="image/avif"
-            />
-            <source
-              srcset="assets/personal-website.webp"
-              type="image/webp"
-            />
-            <img
-              src="assets/personal-website.png"
-              alt="Ada's personal portfolio website displayed on a phone."
-            />
-          </picture>
-        </div>
-        <a>Personal Website | Passion Project </a>
+      <project-card data-project-name="website" data-title="Personal Website | Passion Project" 
+        data-cover-type="image" data-srcs='["assets/personal-website.avif", "assets/personal-website.webp", "assets/personal-website.png"]'
+        data-tags='["fullstack", "design"]' data-deploy-link="https://library.ucsd.edu/">
       </project-card>
       <template>
         <dialog-overlay>
@@ -159,6 +94,6 @@
         />
       </a>
     </footer>
-    <script src="index.js"></script>
+    <script type="module" src="index.js"></script>
   </body>
 </html>

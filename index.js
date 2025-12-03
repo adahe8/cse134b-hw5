@@ -1,3 +1,5 @@
+import './components/projectCard.js';
+
 const btn = document.querySelector(".toggle");
 const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
 const label = document.getElementById("theme-label");
