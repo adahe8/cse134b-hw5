@@ -1,16 +1,17 @@
-a {
-    height: var(--project-label-height);
-    align-content: center;
-    box-sizing: border-box;
-    padding: 0 var(--spacing-size);
-    background-color: var(--background);
+a, h3 {
+  margin: 0;
+  height: var(--project-label-height);
+  align-content: center;
+  box-sizing: border-box;
+  padding: 0 var(--spacing-size);
+  background-color: var(--background);
 }
 .projectdisplay {
-    position: relative;
-    text-align: right;
-    padding: var(--spacing-size);
-    height: 100%;
-    overflow: hidden;
+  position: relative;
+  text-align: right;
+  padding: var(--spacing-size);
+  height: 100%;
+  overflow: hidden;
 }
 .projectdisplay video,
 .projectdisplay picture,

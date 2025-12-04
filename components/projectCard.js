@@ -1,5 +1,4 @@
 class ProjectCard extends HTMLElement {
-    // static observedAttributes = ["data-title","data-cover-type", "data-srcs", "data-tags", "data-deploy-link"];
     constructor(){
         super();
     }
@@ -37,12 +36,12 @@ class ProjectCard extends HTMLElement {
                 let source = document.createElement("source");
                 source.setAttribute("src", src);
                 source.setAttribute("type", `video/${vidType}`);
-                source.setAttribute("aria-label",`A demonstration of ${projectName}.`);
+                source.setAttribute("aria-label", `A demonstration of ${projectName}.`);
                 vidCover.appendChild(source);
             });
             vidCover.appendChild(document.createTextNode("Video not supported."));
             display.appendChild(vidCover);
-        }else if(coverType === "image"){
+        } else if(coverType === "image") {
             let imgCover = document.createElement("picture");
             imgCover.setAttribute("loading", "lazy");
             srcLinks.forEach(src => {
@@ -60,16 +59,10 @@ class ProjectCard extends HTMLElement {
                 }
             });
             display.appendChild(imgCover);
-        }else {
+        } else {
             // error handling for me, the developer
-            console.log("You put in an invalid cover type to the data-cover-type attribute. It has to be either image or video.");
+            console.log("You put in an invalid cover type to the cover-type attribute. It has to be either image or video.");
         }
-
-        const title = document.createElement("a");
-        if(this.hasAttribute("data-deploy-link")){
-            title.setAttribute("href", this.getAttribute("data-deploy-link"));
-        }
-        title.textContent = projectName;
 
         // referencing external stylesheet
         const linkStyle = document.createElement("link");
@@ -79,12 +72,21 @@ class ProjectCard extends HTMLElement {
         // putting it all together
         shadow.appendChild(linkStyle);
         shadow.appendChild(display);
-        shadow.appendChild(title);
+        const title = document.createElement("h3");
+        title.textContent = projectName;
+        if(this.hasAttribute("data-deploy-link")){
+            const anchor = document.createElement("a");
+            anchor.setAttribute("href", this.getAttribute("data-deploy-link"));
+            anchor.appendChild(title);
+            shadow.appendChild(anchor);
+        } else {
+            shadow.appendChild(title);
+        }
 
     }
 
     disconnectedCallback(){
-        console.log(`${this.getAttribute("data-name")} was removed.`);
+        console.log(`${this.getAttribute("data-title")} was removed.`);
     }
 }
 

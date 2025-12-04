@@ -1,4 +1,5 @@
-import './components/projectCard.js';
+import "./components/projectCard.js";
+import "./loadProjects.js";
 
 const btn = document.querySelector(".toggle");
 const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
@@ -41,70 +42,3 @@ function updateIconsAndButtons() {
     document.querySelector("footer a img").src = "assets/linkedin-white.png";
   }
 }
-
-// populating the dialog box
-const template = document.querySelector("template");
-const projectGallery = document.getElementById("projects-main");
-// fetch data
-fetch('/projectdata.json')
-  .then(response => response.json())
-  .then(data => {
-    projectGallery.addEventListener('click', e => {
-      const card = e.target.closest('project-card');
-      if (!card) return; // catch clicks only on project cards
-
-      //grab the project id
-      const project = data[card.dataset.projectName];
-      if (!project) return;
-
-      //clone dialog into DOM, then plug in data
-      const overlay = template.content.querySelector('dialog-overlay').cloneNode(true);
-      document.body.appendChild(overlay);
-
-      const dialog = overlay.shadowRoot
-      ? overlay.shadowRoot.querySelector('dialog')
-      : overlay.querySelector('dialog');
-
-
-      dialog.querySelector('h2').textContent = project.title;
-      dialog.querySelector('h3').textContent = project.date;
-      const marqueeSection = dialog.querySelector('#marquee-content');
-      marqueeSection.textContent = "";
-      project.tools.forEach(item => {
-        const span = document.createElement('span');
-        span.textContent = item;
-        marqueeSection.appendChild(span);
-      });
-      const button = dialog.querySelector('#todeployment');
-      if (project.deployment != "") {
-        button.textContent = "View Project!";
-        button.addEventListener('click', () => {
-          window.open(project.deployment, '_blank');
-        });
-      } else {
-        button.style.backgroundColor = "var(--background)";
-        button.textContent = "Not yet deployed";
-      }
-      if (project.articleHeader != "") {
-        dialog.querySelector('article h3').textContent = project.articleHeader;
-      } else {
-        dialog.querySelector('article h3').style.display = "none";
-      }
-      const blogBody = dialog.querySelector('article');
-      project.description.forEach(paragraph => {
-        const p = document.createElement('p');
-        p.textContent = paragraph;
-        blogBody.appendChild(p);
-      });
-
-      dialog.showModal();
-
-      dialog.querySelector('#close').addEventListener('click', () => {
-        dialog.close();
-      });
-      
-      dialog.addEventListener('close', function() {
-        overlay.remove();
-      });
-    });
-  })

@@ -1,0 +1,103 @@
+const url = `https://api.jsonbin.io/v3/b/69314eb743b1c97be9d70dd3`;
+let projects = {};
+
+const projectGallery = document.getElementById("projects-main");
+const remoteButton = document.getElementById("remote");
+
+remoteButton.addEventListener("click", async () => {
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error(`Response status: ${response.status}`);
+        }
+        const jsonData = await response.json();
+        populateCardGallery(jsonData.record);
+        populateDialog(jsonData.record);
+    } catch (error) {
+        console.error(error.message);
+    }
+});
+
+function populateCardGallery(projects) {
+    projectGallery.innerHTML = "";
+    Object.keys(projects).forEach(key => {
+        const project = projects[key];
+        const card = document.createElement("project-card");
+        card.setAttribute("data-id", `${key}`);
+        card.setAttribute("data-title", `${project.title}`);
+        card.setAttribute("data-tags", JSON.stringify(project.tags));
+        if (project.deployment) {
+            card.setAttribute("data-deploy-link", `${project.deployment}`);
+        }
+        card.setAttribute("data-cover-type", `${project.coverType}`);
+        card.setAttribute("data-srcs", JSON.stringify(project.srcs));
+        projectGallery.appendChild(card);
+    });
+
+}
+
+function populateDialog(projects) {
+    // populating the dialog box
+    // attempting the event bubblimg approach
+    projectGallery.addEventListener('click', e => {
+        const card = e.target.closest('project-card');
+        if (!card) return; // catch clicks only on project cards
+
+        //grab the project id
+        const project = projects[card.dataset.id];
+        if (!project) return;
+
+        //clone dialog into DOM, then plug in data
+        const template = document.querySelector("template");
+        const overlay = template.content.querySelector('dialog-overlay').cloneNode(true);
+        document.body.appendChild(overlay);
+
+        const dialog = overlay.shadowRoot
+        ? overlay.shadowRoot.querySelector('dialog')
+        : overlay.querySelector('dialog');
+
+
+        dialog.querySelector('h2').textContent = project.title;
+        dialog.querySelector('h3').textContent = project.date;
+        const marqueeSection = dialog.querySelector('#marquee-content');
+        marqueeSection.textContent = "";
+
+        project.tools.forEach(item => {
+            const span = document.createElement('span');
+            span.textContent = item;
+            marqueeSection.appendChild(span);
+        });
+        const button = dialog.querySelector('#todeployment');
+        if (project.deployment != "") {
+            button.textContent = "View Project!";
+            button.addEventListener('click', () => {
+            window.open(project.deployment, '_blank');
+            });
+        } else {
+            button.style.backgroundColor = "var(--background)";
+            button.textContent = "Not yet deployed";
+        }
+        if (project.articleHeader != "") {
+            dialog.querySelector('article h3').textContent = project.articleHeader;
+        } else {
+            dialog.querySelector('article h3').style.display = "none";
+        }
+        const blogBody = dialog.querySelector('article');
+        project.description.forEach(paragraph => {
+            const p = document.createElement('p');
+            p.textContent = paragraph;
+            blogBody.appendChild(p);
+        });
+
+        dialog.showModal();
+
+        dialog.querySelector('#close').addEventListener('click', () => {
+            dialog.close();
+        });
+        
+        dialog.addEventListener('close', function() {
+            overlay.remove();
+        });
+    });
+}
+
