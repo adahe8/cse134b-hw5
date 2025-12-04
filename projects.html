@@ -46,22 +46,13 @@
     </header>
     <main id="projects-main">
       <noscript> Enable JavaScript to view in depth project descriptions and their deployment statuses! </noscript>
-      <project-card data-project-name="asteria" data-title="Asteria | Infosys BizHacks 2025" 
-        data-cover-type="video" data-srcs='["assets/asteria-demo.mp4"]' data-tags='["ai", "fullstack"]'
-        data-deploy-link="https://github.com/adahe8/bizhacks?tab=readme-ov-file#asteria---omni-channel-marketing-campaign-management-system">
-      </project-card>
-      <project-card data-project-name="ask-us" data-title="Chat with a Librarian Widget | UCSD Library" 
-        data-cover-type="image" data-srcs='["assets/ask-us-demo.gif", "assets/library-with-chat.avif", "assets/library-with-chat.webp", "assets/library-with-chat.png"]'
-        data-tags='["design"]' data-deploy-link="https://library.ucsd.edu/">
-      </project-card>
-      <project-card data-project-name="endowments" data-title="Endowments Webpages | UCSD Library" 
-        data-cover-type="video" data-srcs='["assets/endowments.mp4"]' data-tags='["design", "frontend"]'>
-      </project-card>
-      <project-card data-project-name="website" data-title="Personal Website | Passion Project" 
-        data-cover-type="image" data-srcs='["assets/personal-website.avif", "assets/personal-website.webp", "assets/personal-website.png"]'
-        data-tags='["fullstack", "design"]' data-deploy-link="https://library.ucsd.edu/">
-      </project-card>
-      <template>
+      <div>
+        <button id="local">Load Local</button>
+        <button id="remote">Load Remote</button>
+      </div>
+      <div id="projects-gallery"></div>
+    </main>
+    <template>
         <dialog-overlay>
           <dialog closedby="any">
             <button id="close">x</button>
@@ -82,7 +73,6 @@
           </dialog>
         </dialog-overlay>
       </template>
-    </main>
     <footer>
       <a>ada.he0908@gmail.com</a>
       <a href="https://www.linkedin.com/in/adahe0908/">

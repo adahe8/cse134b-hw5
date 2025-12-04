@@ -6,6 +6,10 @@ a, h3 {
   padding: 0 var(--spacing-size);
   background-color: var(--background);
 }
+a h3 {
+  padding: 0;
+}
+
 .projectdisplay {
   position: relative;
   text-align: right;

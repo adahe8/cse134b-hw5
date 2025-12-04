@@ -1,7 +1,7 @@
 const url = `https://api.jsonbin.io/v3/b/69314eb743b1c97be9d70dd3`;
 let projects = {};
 
-const projectGallery = document.getElementById("projects-main");
+const projectGallery = document.getElementById("projects-gallery");
 const remoteButton = document.getElementById("remote");
 
 remoteButton.addEventListener("click", async () => {
