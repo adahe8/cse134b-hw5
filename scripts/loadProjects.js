@@ -1,5 +1,5 @@
-import {createNewProject, enableEditMode} from "./editProjects.js";
-let projectcount = 0; //global scope var for assigning ids during create
+import {createNewProject, enableEditMode, toggleSelectMode, deleteProjects } from "./editProjects.js";
+let projectcount = localStorage.getItem("projectcount") ? localStorage.getItem("projectcount") : localStorage.length-1; //global scope var for assigning ids during create
 localStorage.setItem("projectcount", projectcount);
 
 const url = `https://api.jsonbin.io/v3/b/69314eb743b1c97be9d70dd3`;
@@ -17,32 +17,63 @@ const editTemplate = document.getElementById("editing-buttons");
 const editorTools = editTemplate.content.querySelector("editing-tools").cloneNode(true);
 localButton.addEventListener("click", () => {
     // get everything from local storage as an object
-    let projectData = {};
-    Object.keys(localStorage).forEach(key => {
-        if (key === "theme" || key === "visited" || key === "projectcount"){
-            return;
-        }
-        projectcount++;
-        localStorage.setItem("projectcount", projectcount);
-        console.log(key);
-        const project = localStorage.getItem(key);
-        projectData[key] = JSON.parse(project);
-    });
+    let projectData = getLocalProjects();
     // add editing tools into card gallery
     if (!editArea.contains(editorTools)){
         editArea.appendChild(editorTools);
     }
     populateCardGallery(projectData);
 });
+
 const reset = editorTools.querySelector("#reset");
 reset.addEventListener("click", () => {
+    Object.keys(localStorage).forEach(key => {
+        if (key === "theme" || key === "visited" || key === "projectcount"){
+            return;
+        }
+        localStorage.removeItem(key);
+        projectcount -= 1;
+    });
+    localStorage.setItem("projectcount", projectcount);
     loadIntoLocal();
 });
 const createBtn = editorTools.querySelector("#create");
 createBtn.addEventListener("click", () => {
     createNewProject();
 });
+const selectBtn = editorTools.querySelector("#select");
 
+let selectedIds = [];
+let selectMode = false;
+const deleteBtn = document.createElement("button");
+deleteBtn.setAttribute("id","delete");
+deleteBtn.textContent = "delete";
+if (selectBtn) {
+    selectBtn.addEventListener("click", () => {
+        selectMode = toggleSelectMode(selectMode, selectBtn, deleteBtn);
+    });
+}
+if (deleteBtn) {
+    deleteBtn.addEventListener("click", () => {
+        const overlays = projectGallery.querySelectorAll("select-overlay");
+        // check which ones are selected
+        overlays.forEach(overlay => {
+            if(overlay.querySelector("input").checked){
+                overlay.setAttribute("selected","");
+                let id = overlay.querySelector("project-card").getAttribute("data-id");
+                selectedIds.push(id);
+            }
+        });
+        alert(`You are deleting ${selectedIds.length}. Proceed?`);
+        deleteProjects(selectedIds);
+        selectMode = toggleSelectMode(selectMode, selectBtn, deleteBtn);
+        populateCardGallery(getLocalProjects());
+    });
+}
+const exitBtn = editorTools.querySelector("#exit");
+exitBtn.addEventListener("click", () => {
+    selectMode = toggleSelectMode(selectMode, selectBtn, deleteBtn);
+});
 
 // load from remote
 const remoteButton = document.getElementById("remote");
@@ -59,6 +90,20 @@ remoteButton.addEventListener("click", async () => {
     }
 });
 
+function getLocalProjects(){
+    let projectData = {};
+    Object.keys(localStorage).forEach(key => {
+        if (key === "theme" || key === "visited" || key === "projectcount"){
+            return;
+        }
+        projectcount++;
+        localStorage.setItem("projectcount", projectcount);
+        console.log(key);
+        const project = localStorage.getItem(key);
+        projectData[key] = JSON.parse(project);
+    });
+    return projectData;
+}
 async function loadIntoLocal(){
     try {
         const response = await fetch(url);

@@ -178,7 +178,51 @@ function enableEditMode(dialogBox, oldCoverType, oldSrcs) {
         fillCard(updateCard, JSON.parse(localStorage.getItem(projectId)), projectId)
         fillDialogInfo(dialogBox, JSON.parse(localStorage.getItem(projectId)));
         editDialog.replaceWith(dialogBox);
-
     });
 }
-export { enableEditMode, createNewProject };
+
+function toggleSelectMode(selectMode, selectBtn, deleteBtn){
+    selectMode = !selectMode;
+
+    const exitSelectDiv = document.getElementById("exit-select");
+    if (selectMode) {
+        document.querySelectorAll("project-card").forEach(card => {
+            // check if card is already wrapped
+            if (card.parentElement.tagName.toLowerCase() === "select-overlay") return;
+            let overlay = document.createElement("select-overlay");
+            let checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+
+            card.replaceWith(overlay);
+            overlay.appendChild(checkbox);
+            overlay.appendChild(card);
+        });
+        selectBtn.replaceWith(deleteBtn);
+        exitSelectDiv.setAttribute("style","display:block;");
+    } else {
+        // reversal function
+        document.querySelectorAll("select-overlay").forEach(overlay => {
+            const card = overlay.querySelector("project-card");
+            overlay.replaceWith(card);
+        });
+        deleteBtn.replaceWith(selectBtn);
+        exitSelectDiv.setAttribute("style","display:none;");
+    }
+    
+    let cards = document.querySelectorAll("select-overlay");
+    cards.forEach(card => {
+        const checkbox = card.querySelector("input");
+        checkbox.checked = false;
+        checkbox.parentNode.style.display = selectMode ? "block" : "none";
+
+    });
+
+    return selectMode;
+}
+
+function deleteProjects(ids){
+    ids.forEach(id => {
+        localStorage.removeItem(id);
+    });
+}
+export { enableEditMode, createNewProject, toggleSelectMode, deleteProjects };

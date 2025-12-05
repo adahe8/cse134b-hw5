@@ -30,6 +30,11 @@ a h3 {
   z-index: 0;
 }
 
+.selected {
+  position: absolute;
+  left: var(--spacing-size);
+  display:none;
+}
 subject-tag {
   position: relative;
   border-radius: var(--tag-rounding);

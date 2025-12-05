@@ -264,10 +264,28 @@ project-card {
   aspect-ratio: var(--card-ratio);
   width: var(--project-card-width);
 }
+select-overlay {
+  position: relative;
+  width: fit-content;
+  height: fit-content;
+  margin: 0;
+  padding: var(--spacing-size);
+}
+select-overlay:has(input[type="checkbox"]:checked) {
+  background-color: var(--accent-2);
+  opacity: 0.3;
+}
+select-overlay input {
+  position: absolute;
+  top: calc(var(--spacing-size) + var(--spacing-size));
+  left: calc(var(--spacing-size) + var(--spacing-size));
+  accent-color: var(--accent-2);
+  z-index: 1;
+}
 
 /** dialog styling */
 body:has(dialog[open]) {
-  overflow:hidden;
+  overflow: hidden;
 }
 dialog-overlay {
   position: fixed;

@@ -5,13 +5,13 @@ class ProjectCard extends HTMLElement {
         super();
         // want to put this component in shadow DOM in open mode, so it can be accessed and edited frequently
         this.attachShadow({mode: "open"});
-        this._ready = false;
+        this._ready = false; // track whether custom component is properly set up
         this._renderQueued = false;
     }
 
     connectedCallback(){
         this.render();
-        this._ready = true;
+        this._ready = true; // if connected callback fires, it's rndered
     }
 
     disconnectedCallback(){
@@ -20,6 +20,7 @@ class ProjectCard extends HTMLElement {
 
     attributeChangedCallback(name, oldValue, newValue){
         if (!this._ready) return;
+        // render again on change only
         if (!this._renderQueued){
             this._renderQueued = true;
             queueMicrotask(() => {
