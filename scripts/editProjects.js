@@ -29,11 +29,53 @@ function buildProjectForm({
         <textarea id="description" rows=21>${description}</textarea>
         <label for="tags">Select the project topics.</label>
         <select id="tags" multiple>${tagSelect}</select>
-        <label for="cover">Upload a image or video to change the project cover.</label>
-        <input id="cover" type="file" accept="image/*, video/*"/>
+        <fieldset>
+            <legend>To change the cover for this project, fill out the fields below. Leave them blank otherwise.</legend>
+            <label for="cover-type">Set the cover type.</label>
+            <select id="cover-type">
+                <option value="video">video</option>
+                <option value="image">image</option>
+            </select>
+            <label for="cover-url">Enter in the link to the video or image cover.</label>
+            <input id="cover-url" type="url" />
+            <label for="local-assets">Optionally choose a backup cover from my local assets.</label>
+            <select id="local-assets">
+                <option value="assets/aboutme-profile.webp">Profile photo</option>
+                <option value="assets/library-tabling.webp">Ada tabling for the library</option>
+                <option value="assets/asteria-demo.mp4">Video demo for Asteria project</option>
+                <option value="assets/endowments.mp4">Video demo for Endowments project</option>
+            </select>
+        </fieldset>
         <button type="submit">Save</button>
     `;
 }
+
+function inferCoverType(url) {
+    const extlink = url.split(".").pop().toLowerCase();
+    const vidAccept = ["mp4", "webm", "mov"];
+    const imageAccept = ["jpg","jpeg","png","webp","gif"];
+
+    if (vidAccept.includes(extlink)) return "video";
+    if (imageAccept.includes(extlink)) return "image";
+    return null;
+}
+
+function handleCoverUpload(urlInput, coverType,localAssetSelect, project, callback){
+    let url = urlInput.trim();
+    if(url=="" && localAssetSelect) {
+        url = localAssetSelect;
+        const inferredType = inferCoverType(url);
+        if (inferredType) {
+            coverType = inferredType;
+        }
+    }
+    if (url) {
+        project["srcs"] = [url];
+        project["coverType"] = coverType;
+    }
+    callback();
+}
+
 function dialogHandling(dialog, original=null) {
     const close = dialog.querySelector(".close");
     if(close) {
@@ -50,20 +92,6 @@ function dialogHandling(dialog, original=null) {
     dialog.addEventListener("close", () => {
         dialog.parentNode.remove();
     });
-}
-function handleCoverUpload(fileInput, project, callback){
-    if (fileInput && fileInput.files.length > 0) {
-        const reader = new FileReader();
-        reader.onload = (event) => {
-            project["srcs"] = [event.target.result];
-            const uploadType = fileInput.files[0].type;
-            project["coverType"] = uploadType.includes("image") ? "image" : "video";
-            callback();
-        };
-        reader.readAsDataURL(fileInput.files[0]);
-    }else{
-        callback();
-    }
 }
 
 function createNewProject(){
@@ -93,8 +121,10 @@ function createNewProject(){
             description: form.querySelector('textarea').value.split("\n"),
         };
 
-        const fileInput = form.querySelector("#cover");
-        handleCoverUpload(fileInput, newProj, () => {
+        const fileUrl = form.querySelector("#cover-url").value;
+        const coverType = form.querySelector("#cover-type").value;
+        const localBackup = form.querySelector("#local-assets").value;
+        handleCoverUpload(fileUrl, coverType, localBackup, newProj, () => {
             let projectcount = localStorage.getItem("projectcount");
             const newId = `p${projectcount}`;
             localStorage.setItem(newId, JSON.stringify(newProj));
@@ -167,8 +197,10 @@ function enableEditMode(dialogBox, oldCoverType, oldSrcs) {
 
         const id = dialogBox.dataset.projectId;
         // if there is a new cover upload, handle it
-        const fileInput = form.querySelector("#cover");
-        handleCoverUpload(fileInput,updatedProj,() => {
+        const fileUrl = form.querySelector("#cover-url").value;
+        const coverType = form.querySelector("#cover-type").value;
+        const localBackup = form.querySelector("#local-assets").value;
+        handleCoverUpload(fileUrl, coverType, localBackup, updatedProj,() => {
             localStorage.setItem(id, JSON.stringify(updatedProj));
         });
 
@@ -183,7 +215,6 @@ function enableEditMode(dialogBox, oldCoverType, oldSrcs) {
 
 function toggleSelectMode(selectMode, selectBtn, deleteBtn){
     selectMode = !selectMode;
-
     const exitSelectDiv = document.getElementById("exit-select");
     if (selectMode) {
         document.querySelectorAll("project-card").forEach(card => {
@@ -208,13 +239,11 @@ function toggleSelectMode(selectMode, selectBtn, deleteBtn){
         deleteBtn.replaceWith(selectBtn);
         exitSelectDiv.setAttribute("style","display:none;");
     }
-    
     let cards = document.querySelectorAll("select-overlay");
     cards.forEach(card => {
         const checkbox = card.querySelector("input");
         checkbox.checked = false;
         checkbox.parentNode.style.display = selectMode ? "block" : "none";
-
     });
 
     return selectMode;
@@ -225,4 +254,4 @@ function deleteProjects(ids){
         localStorage.removeItem(id);
     });
 }
-export { enableEditMode, createNewProject, toggleSelectMode, deleteProjects };
+export { inferCoverType, enableEditMode, createNewProject, toggleSelectMode, deleteProjects };

@@ -57,10 +57,8 @@ class ProjectCard extends HTMLElement {
             vidCover.setAttribute("muted","");
             vidCover.setAttribute("loop","");
             srcLinks.forEach(src => {
-                let vidType = src.slice((src.lastIndexOf('.'))+1);
                 let source = document.createElement("source");
                 source.setAttribute("src", src);
-                source.setAttribute("type", `video/${vidType}`);
                 source.setAttribute("aria-label", `A demonstration of ${projectName}.`);
                 vidCover.appendChild(source);
             });
@@ -70,8 +68,9 @@ class ProjectCard extends HTMLElement {
             let imgCover = document.createElement("picture");
             imgCover.setAttribute("loading", "lazy");
             srcLinks.forEach(src => {
-                let imgType = src.slice((src.lastIndexOf('.'))+1);
-                if (imgType === "png"){
+                let lastIndex = src.lastIndexOf('.');
+                let imgType = src.slice(lastIndex+1);
+                if (srcLinks.length === 1 || imgType === "png"){
                     let img = document.createElement("img");
                     img.setAttribute("src", src);
                     img.setAttribute("alt", `The ${projectName} project deployed on a device.`);
@@ -79,7 +78,6 @@ class ProjectCard extends HTMLElement {
                 }else{
                     let source = document.createElement("source");
                     source.setAttribute("srcset", src);
-                    source.setAttribute("type", `image/${imgType}`);
                     imgCover.appendChild(source);
                 }
             });

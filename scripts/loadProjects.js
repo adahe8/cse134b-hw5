@@ -1,4 +1,4 @@
-import {createNewProject, enableEditMode, toggleSelectMode, deleteProjects } from "./editProjects.js";
+import {inferCoverType, createNewProject, enableEditMode, toggleSelectMode, deleteProjects } from "./editProjects.js";
 let projectcount = localStorage.getItem("projectcount") ? localStorage.getItem("projectcount") : localStorage.length-1; //global scope var for assigning ids during create
 localStorage.setItem("projectcount", projectcount);
 
@@ -40,6 +40,19 @@ reset.addEventListener("click", () => {
 const createBtn = editorTools.querySelector("#create");
 createBtn.addEventListener("click", () => {
     createNewProject();
+    // update UI of form to auto select type of local assets if user opts to choose that
+    const form = document.getElementById("create-project");
+    const coverTypeSelect = form.querySelector("#cover-type");
+    const localAssetSelect = form.querySelector("#local-assets");
+    localAssetSelect.addEventListener("change", () => {
+        const asset = localAssetSelect.value;
+        if (asset) {
+            const inferred = inferCoverType(asset);
+            if (inferred) {
+                coverTypeSelect.value = inferred;
+            }
+        }
+    });
 });
 const selectBtn = editorTools.querySelector("#select");
 
@@ -193,7 +206,7 @@ function fillDialogInfo(dialog, project){
 }
 
 // populating the dialog box
-// attempting the event bubblimg approach
+// attempting the event bubbling approach
 projectGallery.addEventListener('click', e => {
     const card = e.target.closest('project-card');
     if (!card) return; // catch clicks only on project cards
@@ -215,6 +228,19 @@ projectGallery.addEventListener('click', e => {
     const editButton = document.getElementById("edit");
     editButton.addEventListener("click", () => {
         enableEditMode(dialog, card.dataset.coverType, card.dataset.srcs)
+        // update UI of form to auto select type of local assets if user opts to choose that
+        const form = document.getElementById("edit-data");
+        const coverTypeSelect = form.querySelector("#cover-type");
+        const localAssetSelect = form.querySelector("#local-assets");
+        localAssetSelect.addEventListener("change", () => {
+            const asset = localAssetSelect.value;
+            if (asset) {
+                const inferred = inferCoverType(asset);
+                if (inferred) {
+                    coverTypeSelect.value = inferred;
+                }
+            }
+        });
     });
 
     dialog.querySelector('.close').addEventListener('click', () => {
