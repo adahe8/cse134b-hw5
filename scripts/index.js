@@ -1,22 +1,16 @@
-const btn = document.querySelector(".toggle");
+const btn = document.querySelector(".theme-toggle");
 const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
-const label = document.getElementById("theme-label");
 updateIconsAndButtons();
-btn.style.display = "block";
-
-label.textContent = prefersDarkScheme == "dark" ? "to Light Theme" : "to Dark Theme";
+btn.style.display = "flex";
 
 const defaultTheme = localStorage.getItem("theme");
 if (defaultTheme == "dark") {
   document.body.classList.toggle("dark-theme");
-  label.textContent = " to Light Theme";
 } else if (defaultTheme == "light") {
   document.body.classList.toggle("light-theme");
-  label.textContent = " to Dark Theme";
 }
 
 btn.addEventListener("click", function () {
-  console.log("clicked!");
   let theme;
   if (prefersDarkScheme.matches) {
     document.body.classList.toggle("light-theme");
@@ -31,12 +25,12 @@ btn.addEventListener("click", function () {
 
 function updateIconsAndButtons() {
   const theme = localStorage.getItem("theme");
-  if (theme === "dark") {
-    label.textContent = " to Light Theme";
+  const isDark = theme === "dark" || (!theme && prefersDarkScheme.matches);
+  btn.setAttribute("aria-checked", isDark ? "false" : "true");
+  if (isDark) {
     document.querySelector("nav img").src = "assets/logo-darktheme.png";
     document.querySelector("footer a img").src = "assets/linkedin-black.png";
   } else {
-    label.textContent = " to Dark Theme";
     document.querySelector("nav img").src = "assets/logo.png";
     document.querySelector("footer a img").src = "assets/linkedin-white.png";
   }

@@ -1,0 +1,99 @@
+---
+// ModeToggle.astro
+// Renders a <mode-toggle> custom element.
+// No props needed — state lives in localStorage and on body[data-mode].
+---
+ 
+<style>
+  mode-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    background-color: var(--end-blue);
+    border-radius: var(--corner-rounding);
+    border-bottom-right-radius: 0;
+    padding: 0.25rem 0.5rem;
+    box-shadow: var(--drop-shadow);
+    height: 2.5rem;
+    transition: var(--mode-transition);
+  }
+ 
+  mode-toggle button {
+    all: unset;
+    cursor: pointer;
+    font-family: "KoPub Batang", serif;
+    font-size: 0.8rem;
+    padding: 0.2rem 0.6rem;
+    border-radius: calc(var(--corner-rounding) - 4px);
+    color: var(--font-color);
+    transition: background-color 0.25s ease, color 0.25s ease;
+    height: 1.8rem;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+ 
+  mode-toggle button:hover {
+    background-color: var(--accent-2);
+  }
+ 
+  mode-toggle button[aria-pressed="true"] {
+    background-color: var(--accent-1);
+    color: var(--background);
+    font-weight: bold;
+  }
+</style>
+ 
+<mode-toggle role="group" aria-label="Portfolio mode">
+  <button data-mode="ux"  aria-pressed="false">UX</button>
+  <button data-mode="swe" aria-pressed="false">SWE</button>
+  <button data-mode="pm"  aria-pressed="false">PM</button>
+</mode-toggle>
+ 
+<script>
+  class ModeToggle extends HTMLElement {
+    private buttons: NodeListOf<HTMLButtonElement>;
+    private STORAGE_KEY = 'portfolio-mode';
+    private DEFAULT_MODE = 'pm';
+ 
+    constructor() {
+      super();
+      this.buttons = this.querySelectorAll('button[data-mode]');
+    }
+ 
+    connectedCallback() {
+      const saved = localStorage.getItem(this.STORAGE_KEY) || this.DEFAULT_MODE;
+      this.applyMode(saved, false);
+ 
+      this.buttons.forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const mode = btn.getAttribute('data-mode')!;
+          this.applyMode(mode, true);
+        });
+      });
+    }
+ 
+    applyMode(mode: string, save: boolean) {
+      // update body attribute — CSS vars swap automatically
+      document.body.setAttribute('data-mode', mode);
+ 
+      // update aria-pressed on buttons
+      this.buttons.forEach((btn) => {
+        btn.setAttribute(
+          'aria-pressed',
+          btn.getAttribute('data-mode') === mode ? 'true' : 'false'
+        );
+      });
+ 
+      // persist
+      if (save) localStorage.setItem(this.STORAGE_KEY, mode);
+ 
+      // notify the rest of the page (resume link, content islands, etc.)
+      window.dispatchEvent(
+        new CustomEvent('portfolio-mode-change', { detail: mode })
+      );
+    }
+  }
+ 
+  customElements.define('mode-toggle', ModeToggle);
+</script>

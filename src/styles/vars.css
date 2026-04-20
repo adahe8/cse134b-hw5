@@ -1,0 +1,150 @@
+:root {
+  --font-size-h1: 2.5rem;
+  --font-size-h2: 2rem;
+  --font-size-h3: 1.6rem;
+  --font-size-big: 1.25rem;
+ 
+  --spacing-size: 1.5rem;
+  --gutter-size: 3rem;
+  --corner-rounding: 1.25rem;
+  --form-rounding: 8px;
+  --lift-up: -5px;
+  --drop-shadow: 0 5px var(--form-rounding) rgba(0, 0, 0, 0.3);
+ 
+  --footer-height: 4.5rem;
+  --max-subheading-width: 40rem;
+  --home-img-min-width: 250px;
+  --home-img-max-width: 28rem;
+  --blob-min-width: 17.5rem;
+  --blob-min-height: 18rem;
+ 
+  --card-ratio: 3 / 2;
+  --project-card-width: 25rem;
+  --project-label-height: 3rem;
+  --tag-padding: 0.25rem;
+  --tag-rounding: 10px;
+ 
+  /* mode transition — smooth palette swaps */
+  --mode-transition: background-color 0.4s ease, color 0.4s ease,
+    border-color 0.4s ease;
+}
+ 
+/* ─── light mode defaults (PM/portfolio mode acts as base) ─── */
+body {
+  --background: white;
+  --font-color: black;
+  --end-blue: #90c6f0;
+  --end-peach: #fcf4e9;
+  --accent-1: #0163d2;
+  --accent-2: #ffe0b6;
+  --text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff,
+    -1px 1px 0 #fff;
+}
+ 
+/* ─── dark mode defaults ─── */
+body.dark-theme {
+  --background: #152028;
+  --font-color: white;
+  --end-blue: #005a9f;
+  --end-peach: #ffca7f;
+  --accent-1: #90c6f0;
+  --accent-2: #bf9760;
+  --text-shadow: 0;
+}
+ 
+@media (prefers-color-scheme: dark) {
+  body {
+    --background: #152028;
+    --font-color: white;
+    --end-blue: #005a9f;
+    --end-peach: #ffca7f;
+    --accent-1: #90c6f0;
+    --accent-2: #bf9760;
+    --text-shadow: 0;
+  }
+  body.light-theme {
+    --background: white;
+    --font-color: black;
+    --end-blue: #90c6f0;
+    --end-peach: #fcf4e9;
+    --accent-1: #0163d2;
+    --accent-2: #ffe0b6;
+    --text-shadow: 1px 1px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff,
+      -1px 1px 0 #fff;
+  }
+}
+ 
+/* ═══════════════════════════════════════
+   MODE OVERRIDES
+   These four variables are all that change
+   between modes. Fill in your chosen hex
+   values once you've decided on palettes.
+   ═══════════════════════════════════════ */
+ 
+/* ── UX / Design mode — lavender & blush ── */
+body[data-mode="ux"] {
+  --accent-1: #6B4FA0;
+  --accent-2: #FFD0E8;
+  --end-blue:  #B8A9D5;
+  --end-peach: #FFF2F8;
+}
+ 
+/* ── SWE / ML mode — copper & deep sapphire ── */
+body[data-mode="swe"] {
+  --accent-1: #0E2357;
+  --accent-2: #C87941;
+  --end-blue:  #2D4B9A;
+  --end-peach: #F5DEC8;
+}
+ 
+/* ── Product / PM mode — indigo & gold ── */
+body[data-mode="pm"] {
+  --accent-1: #2B3A8C;
+  --accent-2: #FFD966;
+  --end-blue:  #4A65C0;
+  --end-peach: #FFFBEB;
+}
+ 
+/* ── dark mode variants ── */
+body.dark-theme[data-mode="ux"] {
+  --accent-1: #B8A9D5;
+  --accent-2: #7A4E8A;
+  --end-blue:  #3D2A5E;
+  --end-peach: #2A1A3E;
+}
+ 
+body.dark-theme[data-mode="swe"] {
+  --accent-1: #7B9FE0;
+  --accent-2: #9A5A28;
+  --end-blue:  #0A1A42;
+  --end-peach: #2A1A0A;
+}
+ 
+body.dark-theme[data-mode="pm"] {
+  --accent-1: #7B8FD4;
+  --accent-2: #A08520;
+  --end-blue:  #1A2558;
+  --end-peach: #2A2008;
+}
+ 
+/* system dark mode — mirrors the explicit dark-theme classes above */
+@media (prefers-color-scheme: dark) {
+  body:not(.light-theme)[data-mode="ux"] {
+    --accent-1: #B8A9D5;
+    --accent-2: #7A4E8A;
+    --end-blue:  #3D2A5E;
+    --end-peach: #2A1A3E;
+  }
+  body:not(.light-theme)[data-mode="swe"] {
+    --accent-1: #7B9FE0;
+    --accent-2: #9A5A28;
+    --end-blue:  #0A1A42;
+    --end-peach: #2A1A0A;
+  }
+  body:not(.light-theme)[data-mode="pm"] {
+    --accent-1: #7B8FD4;
+    --accent-2: #A08520;
+    --end-blue:  #1A2558;
+    --end-peach: #2A2008;
+  }
+}

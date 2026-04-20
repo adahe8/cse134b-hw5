@@ -1,0 +1,130 @@
+---
+import '../styles/globals.css';
+
+interface Props {
+    title: string;
+    /** which mode is current */
+    current?: 'home' | 'about'  | 'projects' | 'resume';
+}
+
+const { title, current } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, intial-scale=1.0" />
+        <title>{title}</title>
+        <link rel="icon" href="/heart.png" sizes="any" />
+        <!--
+            Inline script that reads mode and theme from localstorage and sets them
+            on <body> BEFORE paint, to prevent flash of unstyled conent
+        -->
+        <script is:inline>
+        (function (){
+            const mode = localStorage.getItem('portfolio-mode') || 'pm';
+            const theme = localStorage.getItem('portfolio-theme');
+            const body = document.documentElement;
+            body.setAttribute('data-mode', mode);
+            if (theme) body.classList.add(theme + '-theme');
+            else if (window.matchMedia('(prefers-color=scheme: dark)').matches){
+                body.classList.add('dark-theme');
+            }
+        })();
+        </script>
+    </head>
+    <body>
+        <header>
+            <nav>
+                <img src="/logo.png" alt="blue heart logo" />
+                <a href="/" data-current={current === 'home' ? '' : undefined}>Entry</a>
+                <a href="/" data-current={current === 'about' ? '' : undefined}>About Me</a>
+                <a href="/" data-current={current === 'projects' ? '' : undefined}>Projects</a>
+                <!--
+                    Mode-aware resume link"
+                -->
+                <a id="resume-link" href="/Ada_He_SWEResume.pdf" data-current={current==='resume' ? '' : undefined}>Resume</a>
+            </nav>
+            <!-- dark/light theme toggle -->
+            <button
+                class="theme-toggle"
+                role="switch"
+                aria-checked="true"
+                aria-label="Toggle color theme"
+            >
+                <svg class="icon-sun" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" stroke-linecap="round" stroke="currentColor" stroke-width="3">
+                    <circle cx="64" cy="64" r="26"/>
+                    <path d="m39 89-7 7m7-57-7-7m64 64-7-7m7-57-7 7M30 64H17m94 0H98M64 98v13m0-94v13"/>
+                </svg>
+                <svg class="icon-moon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="m74 40 4 10 10 4-10 4-4 10-4-10-10-4 10-4z" id="moon-star-idx"/>
+                    <use href="#moon-star-idx" x="24" y="-24"/>
+                    <path d="M105 94A50 49 35 1150 16a54 50 35 0055 78Z"/>
+                </svg>
+            </button>
+
+            <!-- three way mode switcher component, defined in ModeToggle.astr -->
+            <mode-toggle></mode-toggle>
+
+            <noscript>Allow JavaScript if you want to override the system default theme!</noscript>
+        </header>
+
+        <main>
+            <slot />
+        </main>
+
+        <footer>
+            <a style="color:var(--background);" href="mailto:ada.he0908@gmail.com">
+            ada.he0908@gmail.com
+            </a>
+            <a href="https://www.linkedin.com/in/adahe0908/">LinkedIn</a>
+            <a href="https://github.com/adahe8">GitHub</a>
+        </footer>
+
+        <!-- theme toggle script (preserved from original) -->
+        <script>
+            const toggle = document.querySelector('button.theme-toggle') as HTMLButtonElement;
+            if (toggle) {
+                toggle.style.display = 'block';
+        
+                const isDark = () =>
+                document.body.classList.contains('dark-theme') ||
+                (!document.body.classList.contains('light-theme') &&
+                    window.matchMedia('(prefers-color-scheme: dark)').matches);
+        
+                toggle.setAttribute('aria-checked', isDark() ? 'true' : 'false');
+        
+                toggle.addEventListener('click', () => {
+                const dark = isDark();
+                document.body.classList.toggle('dark-theme', !dark);
+                document.body.classList.toggle('light-theme', dark);
+                localStorage.setItem('portfolio-theme', dark ? 'light' : 'dark');
+                toggle.setAttribute('aria-checked', dark ? 'false' : 'true');
+                });
+            }
+        </script>
+    
+        <!-- mode-aware resume link updater -->
+        <script>
+            const resumeLinks: Record<string, string> = {
+                ux:  '/Ada_He_UXResume.pdf',
+                swe: '/Ada_He_SWEResume.pdf',
+                pm:  '/Ada_He_PMResume.pdf',
+            };
+        
+            function updateResumeLink(mode: string) {
+                const link = document.getElementById('resume-link') as HTMLAnchorElement;
+                if (link && resumeLinks[mode]) link.href = resumeLinks[mode];
+            }
+        
+            // listen for mode changes dispatched by ModeToggle
+            window.addEventListener('portfolio-mode-change', (e: Event) => {
+                updateResumeLink((e as CustomEvent<string>).detail);
+            });
+        
+            // init on load
+            updateResumeLink(localStorage.getItem('portfolio-mode') || 'pm');
+        </script>
+    </body>
+ </html>
